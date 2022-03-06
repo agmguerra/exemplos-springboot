@@ -1,0 +1,31 @@
+## Ao configurar o server colocar o nome do container
+version: '3.9'
+
+services:
+  postgres-sdsmovie:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "0825"
+    ports:
+      - 5432:5432
+    volumes:
+      - /home/agmgu/prj/dbdata-postgress:/var/lib/postgresql/data
+    networks:
+      - net-postgres
+  
+  pgamin4-postgres:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "agmguerra@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "0825"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres-sdsmovie
+    networks:
+      - net-postgres
+  
+networks:
+  net-postgres:
+    driver: bridge
+
